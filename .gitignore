@@ -1,0 +1,14 @@
+/target/
+/.settings/
+.classpath
+.project
+zeus-common/target/
+zeus-data/target/
+zeus-service/target/
+zeus-web/target/
+zeus-common/.factorypath
+zeus-data/.factorypath
+zeus-data/.project
+zeus-service/.factorypath
+zeus-service/.project
+zeus-web/.factorypath
