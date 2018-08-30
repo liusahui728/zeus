@@ -1,4 +1,5 @@
 D:\selfworkspace\zeus\zeus-data\src\main\java\org\com\zeus\sequence\handler\SeqGeneratorImpl.java
+D:\selfworkspace\zeus\zeus-data\src\main\java\org\com\zeus\mybatis\conf\MybatisPlusConfig.java
 D:\selfworkspace\zeus\zeus-data\src\main\java\org\com\zeus\sequence\dao\SequenceDao.java
 D:\selfworkspace\zeus\zeus-data\src\main\java\org\com\zeus\sequence\handler\SequenceDTO.java
 D:\selfworkspace\zeus\zeus-data\src\main\java\org\com\zeus\sequence\handler\SeqGenerator.java
