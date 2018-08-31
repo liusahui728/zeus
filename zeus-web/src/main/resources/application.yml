@@ -18,6 +18,8 @@ spring:
     view:
      prefix: /WEB-INF/views/ # Read From Web Resources Dir
      suffix: .jsp
+    favicon:
+      enabled: true
 mybatis-plus:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
