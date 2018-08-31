@@ -24,20 +24,15 @@ public class SeqGeneratorImpl implements SeqGenerator {
 
 	public String seqName;
 
-	public String getSeqName() {
-		return seqName;
-	}
-
-	public void setSeqName(String seqName) {
+	public SeqGeneratorImpl(String seqName, int step) {
+		super();
 		this.seqName = seqName;
-	}
-
-	public int getStep() {
-		return step;
-	}
-
-	public void setStep(int step) {
 		this.step = step;
+	}
+
+	public SeqGeneratorImpl(String seqName) {
+		super();
+		this.seqName = seqName;
 	}
 
 	public void init() {
@@ -77,8 +72,8 @@ public class SeqGeneratorImpl implements SeqGenerator {
 				Integer count = sequenceDao.insert(sequenceDO);
 				System.out.println("count----》" + count);
 				log.info("创建名为" + seqName + "的序列成功------------------->create sequence" + seqName + "success!");
-				//initSeq();
-				sequence=sequenceDO;
+				// initSeq();
+				sequence = sequenceDO;
 			} catch (Exception e) {
 				log.error("创建名为" + seqName + "的序列失败-------------->can't create sequence " + seqName + "");
 			}

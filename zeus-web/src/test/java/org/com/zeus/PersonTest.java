@@ -2,6 +2,7 @@ package org.com.zeus;
 
 import org.com.zeus.common.model.Person;
 import org.com.zeus.mapper.PersonMapper;
+import org.com.zeus.sequence.handler.SeqGenerator;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,9 +11,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 public class PersonTest extends AppTest {
 	@Autowired
 	PersonMapper personDao;
+	@Autowired
+	SeqGenerator seqSequence;
 
 	@Test
 	public <T> void test() {
+		System.out.println("seq------------------------>"+seqSequence.getNextVal());
 		Person person=new Person();
 		person.setName("张三");
 		personDao.insert(person);
