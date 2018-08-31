@@ -12,8 +12,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 @Entity
-@Table(name = "person")
 @Data
+@Table(name = "person")
 public class Person extends Model<Person> {
 	/**
 	 * 

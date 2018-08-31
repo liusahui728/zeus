@@ -2,6 +2,10 @@ server:
   context-path: /zeus
   port: 10086
 spring:
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
   datasource:
     url: jdbc:mysql://192.168.85.128:3306/zeus?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root

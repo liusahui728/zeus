@@ -21,6 +21,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.com</groupId>
+			<artifactId>zeus-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.com</groupId>
 			<artifactId>zeus-common</artifactId>
 		</dependency>
 		<dependency>
