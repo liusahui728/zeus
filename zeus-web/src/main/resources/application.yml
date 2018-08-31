@@ -14,6 +14,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  mvc:
+    view:
+     prefix: /WEB-INF/views/ # Read From Web Resources Dir
+     suffix: .jsp
 mybatis-plus:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
