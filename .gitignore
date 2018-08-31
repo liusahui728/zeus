@@ -5,6 +5,10 @@
 zeus-common/target/
 zeus-data/target/
 zeus-service/target/
+zeus-security/target/
+zeus-security/.settings/
+zeus-security/.classpath
+zeus-security/.project
 zeus-web/target/
 zeus-common/.factorypath
 zeus-data/.factorypath
