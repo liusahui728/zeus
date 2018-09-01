@@ -28,9 +28,9 @@ public class MyShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
 		// 获取登录用户名
-		String name = (String) principalCollection.getPrimaryPrincipal();
+		String username = (String) principalCollection.getPrimaryPrincipal();
 		// 查询用户名称
-		User user = userMapper.selectOne(new QueryWrapper<User>().eq("name", name)); // 添加角色和权限
+		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username)); // 添加角色和权限
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 		/*
 		 * for (Role role : user.getRoles()) { // 添加角色
@@ -51,8 +51,8 @@ public class MyShiroRealm extends AuthorizingRealm {
 			return null;
 		}
 		// 获取用户信息
-		String name = authenticationToken.getPrincipal().toString();
-		User user = userMapper.selectOne(new QueryWrapper<User>().eq("name", name));
+		String username = authenticationToken.getPrincipal().toString();
+		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
 		if (user == null) {
 			// 这里返回后会报出对应异常
 			return null;
@@ -60,9 +60,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 		if (user.getStatus() == 1) { // 账户冻结
 			throw new LockedAccountException();
 		}
+		ByteSource salt=ByteSource.Util.bytes(username);
 		// 这里验证authenticationToken和simpleAuthenticationInfo的信息
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(name,
-				user.getPassword().toString(), ByteSource.Util.bytes(1), getName());
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username,
+				user.getPassword().toString(),salt, getName());
 		return simpleAuthenticationInfo;
 	}
 }

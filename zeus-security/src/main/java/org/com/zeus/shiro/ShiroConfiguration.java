@@ -19,19 +19,20 @@ public class ShiroConfiguration {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String,String> map = new HashMap<String, String>();
+        Map<String,String> filterChainDefinitionMap = new HashMap<String, String>();
         //登出
-        map.put("/logout","logout");
-        map.put("/jquery/**","anon");
+        filterChainDefinitionMap.put("/logout","logout");
+        filterChainDefinitionMap.put("/jquery/**","anon");
+        filterChainDefinitionMap.put("/doRegister","anon");
         //对所有用户认证
-        map.put("/**","authc");
+        filterChainDefinitionMap.put("/**","authc");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/login");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
     

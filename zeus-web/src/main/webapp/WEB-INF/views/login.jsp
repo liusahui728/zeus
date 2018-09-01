@@ -12,14 +12,14 @@
 <body>
 	<h1>欢迎登录!${user.username }</h1>
 	<form>
-		<input type="text" name="username" id="username"><br> <input
-			type="password" name="password" id="password"><br> <input
-			type="button" id="sub" value="提交">
+		<p><input type="text" name="username" id="username"></p>
+		<p><input type="password" name="password" id="password"></p>
+		<p><input type="button" id="login" value="提交"><a href="doRegister"><input type="button" id="register" value="注册"></a></p>
 	</form>
 </body>
 </html>
 <script>
-	$("#sub").click(function() {
+	$("#login").click(function() {
 		$.ajax({
 			type : "POST",
 			url : "login",
@@ -27,6 +27,11 @@
 			dataType : "json",
 			contentType : "application/json",
 			success : function(data) {
+				if(data.isSuccess){
+					location.href="index"
+				}else{
+					alert("登录失败")
+				}
 			}
 		});
 	});
