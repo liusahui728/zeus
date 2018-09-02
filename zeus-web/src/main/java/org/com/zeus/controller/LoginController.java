@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
@@ -41,7 +42,7 @@ public class LoginController {
 		Subject subject = SecurityUtils.getSubject();
 		String userName = map.get("username").toString();
 		String password = map.get("password").toString();
-		String newPs = new SimpleHash("MD5", password, ByteSource.Util.bytes(userName),2).toHex();
+		String newPs = new SimpleHash("MD5", password, ByteSource.Util.bytes(userName), 2).toHex();
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, newPs);
 		// 进行验证，这里可以捕获异常，然后返回对应信息
 		try {
@@ -58,13 +59,39 @@ public class LoginController {
 		return "register";
 
 	}
-	
+
 	@GetMapping("/index")
-	public String gomenu() {
-		return "index";
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView(); 
+		mav.setViewName("index");
+		mav.addObject("username", SecurityUtils.getSubject().getPrincipal());
+		return mav;
 
 	}
 
+	@GetMapping("/add")
+	public String add() {
+		return "add";
+
+	}
+
+	@GetMapping("/query")
+	public String query() {
+		return "query";
+
+	}
+
+	@GetMapping("/edit")
+	public String edit() {
+		return "edit";
+
+	}
+
+	@GetMapping("/delete")
+	public String delete() {
+		return "delete";
+
+	}
 	@PostMapping("/doRegister")
 	@ResponseBody
 	public BaseResullt doRegister(@RequestBody User user) {

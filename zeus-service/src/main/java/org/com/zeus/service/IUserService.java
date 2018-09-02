@@ -3,6 +3,7 @@ package org.com.zeus.service;
 import java.util.List;
 
 import org.com.zeus.common.base.entity.BaseResullt;
+import org.com.zeus.common.dto.UserPermissionDTO;
 import org.com.zeus.common.model.Person;
 import org.com.zeus.common.model.User;
 
@@ -19,4 +20,8 @@ public interface IUserService extends IService<User> {
 	List<User> selectListByWrapper(Wrapper<User> wrapper);
 
 	BaseResullt<User> register(User wrapper);
+	
+	List<String> getPermissionByUsername(User wrapper);
+	
+	List<String> getRoleByUsername(User wrapper);
 }

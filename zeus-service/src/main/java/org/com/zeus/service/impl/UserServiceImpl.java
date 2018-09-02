@@ -6,9 +6,11 @@ import java.util.Map;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.com.zeus.common.base.entity.BaseResullt;
+import org.com.zeus.common.dto.UserPermissionDTO;
 import org.com.zeus.common.model.Person;
 import org.com.zeus.common.model.User;
 import org.com.zeus.mapper.PersonMapper;
+import org.com.zeus.mapper.RoleMapper;
 import org.com.zeus.mapper.UserMapper;
 import org.com.zeus.service.IUserService;
 import org.slf4j.Logger;
@@ -28,6 +30,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+	@Autowired
+	RoleMapper roleMapper;
+	
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Override
@@ -55,6 +60,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 			return BaseResullt.utils.setFailMsg("用户名已被注册");
 		}
 
+	}
+
+	@Override
+	public List<String> getPermissionByUsername(User wrapper) {
+		return baseMapper.getPermissionByUsername(wrapper);
+	}
+
+	@Override
+	public List<String> getRoleByUsername(User wrapper) {
+		return baseMapper.getRoleByUsername(wrapper);
 	}
 
 }

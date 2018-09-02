@@ -1,5 +1,7 @@
 package org.com.zeus.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,6 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.com.zeus.common.model.User;
 import org.com.zeus.mapper.UserMapper;
+import org.com.zeus.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,6 +26,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 	@Autowired
 	private UserMapper userMapper;
 
+	// 用于用户查询
+	@Autowired
+	private IUserService userService;
+
 	// 角色权限和对应权限添加
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -32,14 +39,9 @@ public class MyShiroRealm extends AuthorizingRealm {
 		// 查询用户名称
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username)); // 添加角色和权限
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-		/*
-		 * for (Role role : user.getRoles()) { // 添加角色
-		 * simpleAuthorizationInfo.addRole(role.getRoleName()); for (Permission
-		 * permission : role.getPermissions()) { // 添加权限
-		 * simpleAuthorizationInfo.addStringPermission(permission.getPermission()); } }
-		 */
-
-		return new SimpleAuthorizationInfo();
+		simpleAuthorizationInfo.addRoles(userService.getRoleByUsername(user));
+		simpleAuthorizationInfo.addStringPermissions(userService.getPermissionByUsername(user));
+		return simpleAuthorizationInfo;
 	}
 
 	// 用户认证
@@ -60,10 +62,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 		if (user.getStatus() == 1) { // 账户冻结
 			throw new LockedAccountException();
 		}
-		ByteSource salt=ByteSource.Util.bytes(username);
+		ByteSource salt = ByteSource.Util.bytes(username);
 		// 这里验证authenticationToken和simpleAuthenticationInfo的信息
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username,
-				user.getPassword().toString(),salt, getName());
+				user.getPassword().toString(), salt, getName());
 		return simpleAuthenticationInfo;
 	}
 }
