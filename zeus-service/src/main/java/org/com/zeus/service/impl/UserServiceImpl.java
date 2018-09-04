@@ -6,10 +6,7 @@ import java.util.Map;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.com.zeus.common.base.entity.BaseResullt;
-import org.com.zeus.common.dto.UserPermissionDTO;
-import org.com.zeus.common.model.Person;
 import org.com.zeus.common.model.User;
-import org.com.zeus.mapper.PersonMapper;
 import org.com.zeus.mapper.RoleMapper;
 import org.com.zeus.mapper.UserMapper;
 import org.com.zeus.service.IUserService;
@@ -48,7 +45,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		 * MD5加密： 使用SimpleHash类对原始密码进行加密。 第一个参数代表使用MD5方式加密 第二个参数为原始密码 第三个参数为盐值，即用户名
 		 * 第四个参数为加密次数 最后用toHex()方法将加密后的密码转成String
 		 */
-		String newPs = new SimpleHash("MD5", user.getPassword(), salt,2).toHex();
+		String newPs = new SimpleHash("md5", user.getPassword(), salt,2).toHex();
 		user.setPassword(newPs);
 		// 看数据库中是否存在该账户
 		List<Map<String, Object>> list = baseMapper

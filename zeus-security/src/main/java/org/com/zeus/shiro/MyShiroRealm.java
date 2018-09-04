@@ -1,7 +1,5 @@
 package org.com.zeus.shiro;
 
-import java.util.List;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -35,9 +33,9 @@ public class MyShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
 		// 获取登录用户名
-		String username = (String) principalCollection.getPrimaryPrincipal();
+		User temp = (User) principalCollection.getPrimaryPrincipal();
 		// 查询用户名称
-		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username)); // 添加角色和权限
+		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", temp.getUsername())); // 添加角色和权限
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 		simpleAuthorizationInfo.addRoles(userService.getRoleByUsername(user));
 		simpleAuthorizationInfo.addStringPermissions(userService.getPermissionByUsername(user));
@@ -54,6 +52,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 		}
 		// 获取用户信息
 		String username = authenticationToken.getPrincipal().toString();
+		System.out.println(authenticationToken.getCredentials());
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
 		if (user == null) {
 			// 这里返回后会报出对应异常
@@ -62,10 +61,8 @@ public class MyShiroRealm extends AuthorizingRealm {
 		if (user.getStatus() == 1) { // 账户冻结
 			throw new LockedAccountException();
 		}
-		ByteSource salt = ByteSource.Util.bytes(username);
 		// 这里验证authenticationToken和simpleAuthenticationInfo的信息
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username,
-				user.getPassword().toString(), salt, getName());
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(),ByteSource.Util.bytes(user.getUsername()), getName());
 		return simpleAuthenticationInfo;
 	}
 }
