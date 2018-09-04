@@ -14,16 +14,18 @@
 	<form>
 		<p><input type="text" name="username" id="username"></p>
 		<p><input type="password" name="password" id="password"></p>
+		<input type="checkbox" name="rememberMe" id="rememberMe">记住密码
 		<p><input type="button" id="login" value="提交"><a href="doRegister"><input type="button" id="register" value="注册"></a></p>
 	</form>
 </body>
 </html>
 <script>
 	$("#login").click(function() {
+		var rememberMe=$("#rememberMe").is(':checked');
 		$.ajax({
 			type : "POST",
 			url : "login",
-			data : JSON.stringify({"username":$("#username").val(),"password":$("#password").val()}),
+			data : JSON.stringify({"username":$("#username").val(),"password":$("#password").val(),"rememberMe":rememberMe}),
 			dataType : "json",
 			contentType : "application/json",
 			success : function(data) {

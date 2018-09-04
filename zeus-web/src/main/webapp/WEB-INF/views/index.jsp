@@ -9,7 +9,7 @@
 <title>菜单</title>
 </head>
 <body>
-菜单 ---->当前用户：${username}
+菜单 ---->当前用户：${username}  <a href="logout">退出</a>
 <ul>
 	<li><a href="add">添加</a></li>
 	<li><a href="edit">编辑</a></li>

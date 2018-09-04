@@ -3,7 +3,6 @@ package org.com.zeus.controller;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,12 +26,11 @@ public class LoginController {
 	@Autowired
 	IUserService userService;
 
-	// 退出的时候是get请求，主要是用于退出
 	@GetMapping("/login")
 	public String login() {
 		return "login";
-	}
 
+	}
 	// post登录
 	@PostMapping("/login")
 	@ResponseBody
@@ -42,8 +39,10 @@ public class LoginController {
 		Subject subject = SecurityUtils.getSubject();
 		String userName = map.get("username").toString();
 		String password = map.get("password").toString();
+		Boolean rememberme = (Boolean)map.get("rememberMe");
 		String newPs = new SimpleHash("MD5", password, ByteSource.Util.bytes(userName), 2).toHex();
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, newPs);
+		usernamePasswordToken.setRememberMe(rememberme); 
 		// 进行验证，这里可以捕获异常，然后返回对应信息
 		try {
 			subject.login(usernamePasswordToken);
