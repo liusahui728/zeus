@@ -47,7 +47,8 @@ public class ShiroConfiguration {
 		filterChainDefinitionMap.put("/jquery/**", "anon");
 		filterChainDefinitionMap.put("/doRegister", "anon");
 		filterChainDefinitionMap.put("/add", "roles[管理员]");
-		filterChainDefinitionMap.put("/query", "authc");
+		filterChainDefinitionMap.put("/edit", "roles[开发]");
+		filterChainDefinitionMap.put("/order", "authc");
 		// 配置记住我或认证通过可以访问的地址
 		filterChainDefinitionMap.put("/**", "user");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

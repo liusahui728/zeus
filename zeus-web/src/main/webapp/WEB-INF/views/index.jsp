@@ -11,10 +11,11 @@
 <body>
 菜单 ---->当前用户：${username}  <a href="logout">退出</a>
 <ul>
-	<li><a href="add">添加</a></li>
-	<li><a href="edit">编辑</a></li>
+	<li><a href="add">添加-->需要管理员角色</a></li>
+	<li><a href="edit">编辑-->需要开发角色</a></li>
 	<li><a href="query">查询</a></li>
 	<li><a href="delete">删除</a></li>
+	<li><a href="order">查看订单-->强制登陆</a></li>
 </ul>
 </body>
 </html>

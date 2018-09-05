@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 	@Autowired
 	UserMapper userMapper;
 	@Autowired
@@ -81,13 +81,14 @@ public class LoginController {
 
 	@GetMapping("/query")
 	public String query(Model model,HttpServletRequest request) {
-		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		return "query";
 
 	}
 
 	@GetMapping("/edit")
 	public String edit() {
+		
+		System.out.println(getCurrentUserName());
 		return "edit";
 
 	}
@@ -97,6 +98,14 @@ public class LoginController {
 		return "delete";
 
 	}
+	
+	@GetMapping("/order")
+	public String order() {
+		return "order";
+
+	}
+	
+	
 	@PostMapping("/doRegister")
 	@ResponseBody
 	public BaseResullt doRegister(@RequestBody User user) {

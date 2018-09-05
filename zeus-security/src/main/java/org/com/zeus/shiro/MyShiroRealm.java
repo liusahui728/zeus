@@ -31,7 +31,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 	// 角色权限和对应权限添加
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
+		
 		// 获取登录用户名
 		User temp = (User) principalCollection.getPrimaryPrincipal();
 		// 查询用户名称
