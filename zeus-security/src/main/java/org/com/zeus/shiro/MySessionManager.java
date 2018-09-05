@@ -11,7 +11,7 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Created by Administrator on 2017/12/11. 自定义sessionId获取
+ * 自定义sessionId获取
  */
 public class MySessionManager extends DefaultWebSessionManager {
 

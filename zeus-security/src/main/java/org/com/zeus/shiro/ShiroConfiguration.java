@@ -10,6 +10,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -135,6 +136,12 @@ public class ShiroConfiguration {
 	@Bean
 	public RedisSessionDAO redisSessionDAO() {
 		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+		/*
+		 * User user=new User();
+		 * BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(), user);
+		 * redisSessionDAO.setKeyPrefix(user.getUsername());
+		 */
+		//redisSessionDAO.setSessionIdGenerator(new MySessionIdGenerator());
 		redisSessionDAO.setRedisManager(redisManager());
 		return redisSessionDAO;
 	}
@@ -202,6 +209,11 @@ public class ShiroConfiguration {
 		// rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
 		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
 		return cookieRememberMeManager;
+	}
+
+	@Bean
+	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+		return new LifecycleBeanPostProcessor();
 	}
 	/**
 	 * 注册全局异常处理

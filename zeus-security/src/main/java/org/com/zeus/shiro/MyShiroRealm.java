@@ -1,5 +1,8 @@
 package org.com.zeus.shiro;
 
+import java.util.Collection;
+
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -8,11 +11,15 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
 import org.com.zeus.common.model.User;
 import org.com.zeus.mapper.UserMapper;
 import org.com.zeus.service.IUserService;
+import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -27,13 +34,16 @@ public class MyShiroRealm extends AuthorizingRealm {
 	// 用于用户查询
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	RedisSessionDAO redisSessionDAO;
 
 	// 角色权限和对应权限添加
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		
 		// 获取登录用户名
-		User temp = (User) principalCollection.getPrimaryPrincipal();
+		User temp=new User();
+		BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(), temp);
 		// 查询用户名称
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", temp.getUsername())); // 添加角色和权限
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -53,6 +63,11 @@ public class MyShiroRealm extends AuthorizingRealm {
 		// 获取用户信息
 		String username = authenticationToken.getPrincipal().toString();
 		System.out.println(authenticationToken.getCredentials());
+		Collection<Session> sessions =redisSessionDAO.getActiveSessions();
+		for(Session session:sessions) {
+			session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+			System.out.println(session.getId());
+		}
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
 		if (user == null) {
 			// 这里返回后会报出对应异常
