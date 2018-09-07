@@ -1,0 +1,6 @@
+###########swagger2###########
+http://localhost:10086/swagger-ui.html#/
+###########druid###########
+http://localhost:10086/druid/login.html
+login-username: root
+login-password: 123456

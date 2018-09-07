@@ -34,3 +34,6 @@ mybatis-plus:
       #逻辑删除配置
       logic-delete-value: 0
       logic-not-delete-value: 1
+swagger2: 
+  api: 
+    scanBasePackage: org.com.zeus.controller
