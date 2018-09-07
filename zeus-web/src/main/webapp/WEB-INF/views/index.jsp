@@ -9,6 +9,7 @@
 <title>菜单</title>
 </head>
 <body>
+<p>session:<%=session.getId()%></p>
 菜单 ---->当前用户：${username}  <a href="logout">退出</a>
 <ul>
 	<li><a href="add">添加-->需要管理员角色</a></li>

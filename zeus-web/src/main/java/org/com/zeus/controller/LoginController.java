@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController extends BaseController{
+public class LoginController extends BaseController {
 	@Autowired
 	UserMapper userMapper;
 	@Autowired
@@ -34,6 +34,7 @@ public class LoginController extends BaseController{
 		return "login";
 
 	}
+
 	// post登录
 	@PostMapping("/login")
 	@ResponseBody
@@ -42,20 +43,23 @@ public class LoginController extends BaseController{
 		Subject subject = SecurityUtils.getSubject();
 		String userName = map.get("username").toString();
 		String password = map.get("password").toString();
-		Boolean rememberme = (Boolean)map.get("rememberMe");
-/*		String newPs = new SimpleHash("MD5", password, ByteSource.Util.bytes(userName), 2).toHex();*/
+		Boolean rememberme = (Boolean) map.get("rememberMe");
+		/*
+		 * String newPs = new SimpleHash("MD5", password,
+		 * ByteSource.Util.bytes(userName), 2).toHex();
+		 */
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, password);
-		usernamePasswordToken.setRememberMe(rememberme); 
+		usernamePasswordToken.setRememberMe(rememberme);
 		// 进行验证，这里可以捕获异常，然后返回对应信息
 		try {
 			subject.login(usernamePasswordToken);
 		} catch (DisabledAccountException e) {
 			return BaseResullt.utils.setFailMsg("账户已被禁用");
-        } catch (AuthenticationException e) {
-        	return BaseResullt.utils.setFailMsg("登陆失败");
+		} catch (AuthenticationException e) {
+			return BaseResullt.utils.setFailMsg("登陆失败");
 		}
-		 // 执行到这里说明用户已登录成功
-        return BaseResullt.utils.setSuccess();
+		// 执行到这里说明用户已登录成功
+		return BaseResullt.utils.setSuccess();
 	}
 
 	@GetMapping("/doRegister")
@@ -66,7 +70,7 @@ public class LoginController extends BaseController{
 
 	@GetMapping("/index")
 	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView(); 
+		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index");
 		mav.addObject("username", SecurityUtils.getSubject().getPrincipal());
 		return mav;
@@ -80,14 +84,14 @@ public class LoginController extends BaseController{
 	}
 
 	@GetMapping("/query")
-	public String query(Model model,HttpServletRequest request) {
+	public String query(Model model, HttpServletRequest request) {
 		return "query";
 
 	}
 
 	@GetMapping("/edit")
 	public String edit() {
-		
+
 		System.out.println(getCurrentUserName());
 		return "edit";
 
@@ -98,23 +102,30 @@ public class LoginController extends BaseController{
 		return "delete";
 
 	}
-	
+
 	@GetMapping("/order")
 	public String order() {
 		return "order";
 
 	}
-	
-	
+
 	@PostMapping("/doRegister")
 	@ResponseBody
 	public BaseResullt doRegister(@RequestBody User user) {
 		return userService.register(user);
 
 	}
-	   //被踢出后跳转的页面
-    @GetMapping(value = "/kickout")
-    public String kickOut() {
-        return "kickout";
-    }
+
+	// 被踢出后跳转的页面
+	@GetMapping(value = "/kickout")
+	public String kickOut() {
+		return "kickout";
+	}
+
+	// 被踢出后跳转的页面
+	@GetMapping(value = "/logout")
+	public String logout() {
+		SecurityUtils.getSubject().logout();
+		return "login";
+	}
 }

@@ -10,8 +10,9 @@
 </head>
 
 <body>
-	<h1>欢迎登录!${user.username }</h1>
+	<h1>欢迎登录!</h1>
 	<form>
+		<p>session:<%=session.getId()%></p>
 		<p><input type="text" name="username" id="username"></p>
 		<p><input type="password" name="password" id="password"></p>
 		<input type="checkbox" name="rememberMe" id="rememberMe">记住密码

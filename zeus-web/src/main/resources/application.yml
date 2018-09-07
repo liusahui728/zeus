@@ -1,5 +1,4 @@
 server:
-  context-path: /zeus
   port: 10086
 spring:
   http:

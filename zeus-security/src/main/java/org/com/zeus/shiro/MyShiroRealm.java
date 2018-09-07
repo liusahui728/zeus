@@ -68,6 +68,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 			System.out.println(session.getId());
 		}
+		SecurityUtils.getSubject().getPrincipal();
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
 		if (user == null) {
 			// 这里返回后会报出对应异常

@@ -1,7 +1,9 @@
 package org.com.zeus.shiro;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -9,12 +11,15 @@ import javax.servlet.Filter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
@@ -60,7 +65,9 @@ public class ShiroConfiguration {
 	@Bean
 	public SecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealm(myShiroRealm());
+		List<Realm> realms = new ArrayList<>();
+		realms.add(myShiroRealm());
+		securityManager.setRealms(realms);
 		// 自定义session管理 使用redis
 		securityManager.setSessionManager(sessionManager());
 		// 自定义缓存实现 使用redis
@@ -118,11 +125,16 @@ public class ShiroConfiguration {
 		// 注入redisSessionDAO
 		mySessionManager.setSessionDAO(redisSessionDAO());
 		// 设置过期时间
-		mySessionManager.setGlobalSessionTimeout(60000);
+		mySessionManager.setGlobalSessionTimeout(3600000);
 		// 是否定时检查session
 		mySessionManager.setSessionValidationSchedulerEnabled(true);
 		// 删除过期session
 		mySessionManager.setDeleteInvalidSessions(true);
+		List<SessionListener> list = new ArrayList<>();
+		// 不同项目同域名下cookie对sessionId的处理
+		Cookie cookie = mySessionManager.getSessionIdCookie();
+		cookie.setName("sid");
+		mySessionManager.setSessionIdCookie(cookie);
 
 		return mySessionManager;
 	}
@@ -139,9 +151,9 @@ public class ShiroConfiguration {
 		/*
 		 * User user=new User();
 		 * BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(), user);
-		 * redisSessionDAO.setKeyPrefix(user.getUsername());
+		 * 
 		 */
-		//redisSessionDAO.setSessionIdGenerator(new MySessionIdGenerator());
+		redisSessionDAO.setKeyPrefix("zeus_session:");
 		redisSessionDAO.setRedisManager(redisManager());
 		return redisSessionDAO;
 	}

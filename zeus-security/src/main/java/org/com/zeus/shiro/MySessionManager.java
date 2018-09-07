@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
  */
 public class MySessionManager extends DefaultWebSessionManager {
 
-	private static final String AUTHORIZATION = "Authorization";
+	private static final String AUTHORIZATION = "sid";
 
 	private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
 
@@ -32,7 +32,7 @@ public class MySessionManager extends DefaultWebSessionManager {
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, id);
 			request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
 			return id;
-		} else {
+		}else {
 			// 否则按默认规则从cookie取sessionId
 			return super.getSessionId(request, response);
 		}
