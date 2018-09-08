@@ -1,3 +1,7 @@
+技术栈：
+	后台：
+	springboot+shiro+mybatysplus+lombok+druid(mysql)+jpa+redis
+
 ###########swagger2###########
 http://localhost:10086/swagger-ui.html#/
 ###########druid###########

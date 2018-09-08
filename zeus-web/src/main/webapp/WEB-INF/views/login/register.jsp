@@ -12,8 +12,9 @@
 <body>
 	<h1>注册</h1>
 	<form id="form1">
-	<p><input type="text" name="username" id="username"></p>
-	<p><input type="password" name="password" id="password"></p>
+	<p>用户名：<input type="text" name="account" id="account"></p>
+	<p>花名：<input type="text" name="userName" id="userName"></p>
+	<p>密码<input type="password" name="password" id="password"></p>
 	<p><input type="button" id="sub" value="提交"></p>
 	</form>
 </body>

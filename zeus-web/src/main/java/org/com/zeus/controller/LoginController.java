@@ -31,7 +31,7 @@ public class LoginController extends BaseController {
 
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "login/login";
 
 	}
 
@@ -64,7 +64,7 @@ public class LoginController extends BaseController {
 
 	@GetMapping("/doRegister")
 	public String doRegister() {
-		return "register";
+		return "login/register";
 
 	}
 
@@ -79,13 +79,13 @@ public class LoginController extends BaseController {
 
 	@GetMapping("/add")
 	public String add() {
-		return "add";
+		return "operation/add";
 
 	}
 
 	@GetMapping("/query")
 	public String query(Model model, HttpServletRequest request) {
-		return "query";
+		return "operation/query";
 
 	}
 
@@ -93,19 +93,19 @@ public class LoginController extends BaseController {
 	public String edit() {
 
 		System.out.println(getCurrentUserName());
-		return "edit";
+		return "operation/edit";
 
 	}
 
 	@GetMapping("/delete")
 	public String delete() {
-		return "delete";
+		return "operation/delete";
 
 	}
 
 	@GetMapping("/order")
 	public String order() {
-		return "order";
+		return "operation/order";
 
 	}
 
@@ -116,16 +116,11 @@ public class LoginController extends BaseController {
 
 	}
 
-	// 被踢出后跳转的页面
-	@GetMapping(value = "/kickout")
-	public String kickOut() {
-		return "kickout";
-	}
 
 	// 被踢出后跳转的页面
 	@GetMapping(value = "/logout")
 	public String logout() {
 		SecurityUtils.getSubject().logout();
-		return "login";
+		return "login/login";
 	}
 }

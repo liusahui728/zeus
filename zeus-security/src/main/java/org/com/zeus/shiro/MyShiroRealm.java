@@ -45,10 +45,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 		User temp=new User();
 		BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(), temp);
 		// 查询用户名称
-		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", temp.getUsername())); // 添加角色和权限
+		User user = userMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getAccount, temp.getAccount())); // 添加角色和权限
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-		simpleAuthorizationInfo.addRoles(userService.getRoleByUsername(user));
-		simpleAuthorizationInfo.addStringPermissions(userService.getPermissionByUsername(user));
+		simpleAuthorizationInfo.addRoles(userService.getRoleByAccount(user));
+		simpleAuthorizationInfo.addStringPermissions(userService.getPermissionByAccount(user));
 		return simpleAuthorizationInfo;
 	}
 
@@ -61,7 +61,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			return null;
 		}
 		// 获取用户信息
-		String username = authenticationToken.getPrincipal().toString();
+		String account = authenticationToken.getPrincipal().toString();
 		System.out.println(authenticationToken.getCredentials());
 		Collection<Session> sessions =redisSessionDAO.getActiveSessions();
 		for(Session session:sessions) {
@@ -69,7 +69,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			System.out.println(session.getId());
 		}
 		SecurityUtils.getSubject().getPrincipal();
-		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+		User user = userMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getAccount, account));
 		if (user == null) {
 			// 这里返回后会报出对应异常
 			return null;
@@ -78,7 +78,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			throw new LockedAccountException();
 		}
 		// 这里验证authenticationToken和simpleAuthenticationInfo的信息
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(),ByteSource.Util.bytes(user.getUsername()), getName());
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(),ByteSource.Util.bytes(user.getAccount()), getName());
 		return simpleAuthenticationInfo;
 	}
 }

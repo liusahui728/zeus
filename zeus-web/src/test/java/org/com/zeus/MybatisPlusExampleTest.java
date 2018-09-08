@@ -37,7 +37,7 @@ public class MybatisPlusExampleTest extends AppTest {
 		example.selectById(1L);
 		example.selectCount(null);
 		example.selectOne(new QueryWrapper<Example>().lambda().eq(Example::getId, 1L));
-		example.selectPage(new Page<Example>(1, 10), null);
+		example.selectPage(new Page<Example>(1, 10), new QueryWrapper<Example>().lambda().orderByAsc(Example::getExid));
 		example.updateById();
 		//example.update(new QueryWrapper<Example>().lambda().eq(Example::getExid, example.getExid()));
 		//删除

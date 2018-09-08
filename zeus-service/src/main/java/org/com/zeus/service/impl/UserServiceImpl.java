@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	@Override
 	public BaseResullt<User> register(User user) {
 		// 将用户名作为盐值
-		ByteSource salt = ByteSource.Util.bytes(user.getUsername());
+		ByteSource salt = ByteSource.Util.bytes(user.getAccount());
 		/*
 		 * MD5加密： 使用SimpleHash类对原始密码进行加密。 第一个参数代表使用MD5方式加密 第二个参数为原始密码 第三个参数为盐值，即用户名
 		 * 第四个参数为加密次数 最后用toHex()方法将加密后的密码转成String
@@ -49,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		user.setPassword(newPs);
 		// 看数据库中是否存在该账户
 		List<Map<String, Object>> list = baseMapper
-				.selectMaps(new QueryWrapper<User>().lambda().eq(User::getUsername, user.getUsername()));
+				.selectMaps(new QueryWrapper<User>().lambda().eq(User::getAccount, user.getAccount()));
 		if (CollectionUtils.isEmpty(list)) {
 			baseMapper.insert(user);
 			return BaseResullt.utils.setSuccess();
@@ -60,13 +60,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	}
 
 	@Override
-	public List<String> getPermissionByUsername(User wrapper) {
-		return baseMapper.getPermissionByUsername(wrapper);
+	public List<String> getPermissionByAccount(User wrapper) {
+		return baseMapper.getPermissionByAccount(wrapper);
 	}
 
 	@Override
-	public List<String> getRoleByUsername(User wrapper) {
-		return baseMapper.getRoleByUsername(wrapper);
+	public List<String> getRoleByAccount(User wrapper) {
+		return baseMapper.getRoleByAccount(wrapper);
 	}
 
 }

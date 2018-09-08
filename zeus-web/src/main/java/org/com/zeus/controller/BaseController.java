@@ -13,10 +13,10 @@ public class BaseController {
 	}
 
 	public String getCurrentUserName() {
-		return getCurrentUser().getUsername();
+		return getCurrentUser().getUserName();
 	}
 
 	public Long getCurrentUserId() {
-		return getCurrentUser().getId();
+		return getCurrentUser().getUserId();
 	}
 }

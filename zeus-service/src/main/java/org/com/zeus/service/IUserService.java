@@ -21,7 +21,7 @@ public interface IUserService extends IService<User> {
 
 	BaseResullt<User> register(User wrapper);
 	
-	List<String> getPermissionByUsername(User wrapper);
+	List<String> getPermissionByAccount(User wrapper);
 	
-	List<String> getRoleByUsername(User wrapper);
+	List<String> getRoleByAccount(User wrapper);
 }
