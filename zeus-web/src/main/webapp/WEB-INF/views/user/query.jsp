@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>用户管理${cookie.userName.value}</title>
+<title>用户管理</title>
 <%@ include file="../menu.jsp" %>
 <!-- Custom styles for this template -->
 <link href="css/dashboard.css" rel="stylesheet">
@@ -18,15 +18,61 @@
 	<div class="container-fluid">
 		<div class="row">
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button>
 			<table id="table"></table>
 			</main>
 		</div>
 	</div>
+	<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="addForm">
+					<div class="form-group">
+						<label for="account" class="col-sm-2 control-label">账号</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="account" 
+								   placeholder="请输入账号">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userName" class="col-sm-2 control-label">花名</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="userName" 
+								   placeholder="请输入花名">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-sm-2 control-label">密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="password" 
+								   placeholder="请输入密码">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="addBtn">
+					提交更改
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
 <script>
 $("#table").bootstrapTable({ // 对应table标签的id
-      url: "getData", // 获取表格数据的url
+	  method:"post",
+      url: "user/query", // 获取表格数据的url
       cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
       striped: true,  //表格显示条纹，默认为false
       pagination: true, // 在表格底部显示分页组件，默认false
@@ -38,7 +84,7 @@ $("#table").bootstrapTable({ // 对应table标签的id
       queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
     	  var queryData = {};    //如果没有额外的查询参数的话就新建一个空对象，如果有的话就先装你的查询参数
           //然后增加这两个
-          queryData.limit = params.limit;
+          queryData.pageSize = params.limit;
           queryData.offset = params.offset;
           return queryData;    //这个就是向服务端传递的参数对象
 /*           return {
@@ -76,7 +122,10 @@ $("#table").bootstrapTable({ // 对应table标签的id
               valign: 'middle',
               width: 160, // 定义列的宽度，单位为像素px
               formatter: function (value, row, index) {
-                  return '<button class="btn btn-primary btn-sm" onclick="del(\'' + row.stdId + '\')">删除</button>';
+            	  _html='';
+            	  _html+='<button class="btn btn-primary btn-sm" onclick="del(\'' + row.userId + '\')">删除</button>';
+            	  _html+='<button class="btn btn-primary btn-sm" onclick="edit(\'' + row.userId + '\')">编辑</button>';
+                  return _html;
               }
           }
       ],
@@ -88,5 +137,30 @@ $("#table").bootstrapTable({ // 对应table标签的id
             console.info("加载数据失败");
       }
 
-})
+}),
+$("#addBtn").click(function(data){
+	$.ajax({
+		type : "POST",
+		url : "user/add",
+		data : JSON.stringify({
+			"userName" : $("#userName").val(),
+			"password" : $("#password").val(),
+			"account" : $("#account").val()
+		}),
+		dataType : "json",
+		contentType : "application/json",
+		success : function(data) {alert(data。msg)
+			if (data.isSuccess) {
+				alert("添加成功")
+				$("#myModal").modal('hide'); 
+				$('#table').bootstrapTable('refresh', '');
+			} else {
+				alert(data。msg)
+			}
+		}
+	});
+}),
+function del(data){
+	alert(data)
+}
 </script>

@@ -5,19 +5,17 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import org.com.zeus.common.base.entity.BaseQuery;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Person extends Model<Person> {
+public class Person extends BaseQuery<Person> {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@TableId("person_id")
 	private Long personId;
 
 	private String name;

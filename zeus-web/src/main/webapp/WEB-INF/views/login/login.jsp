@@ -31,8 +31,8 @@
 
 <body class="text-center">
 	<form class="form-signin">
-		<img class="mb-4" src="images/favicon.ico" alt="" width="72"
-			height="72">
+<!-- 		<img class="mb-4" src="images/favicon.ico" alt="" width="72"
+			height="72"> -->
 		<h1 class="h3 mb-3 font-weight-normal">请登陆</h1>
 		<label for="name" class="sr-only">用户名</label> <input type="text"
 			id="username" class="form-control" placeholder="用户名" required
