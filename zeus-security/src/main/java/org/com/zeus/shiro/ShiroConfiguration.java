@@ -50,7 +50,11 @@ public class ShiroConfiguration {
 		// filtersMap.put("kickout", kickoutSessionControlFilter());
 		shiroFilterFactoryBean.setFilters(filtersMap);
 		// authc 需要登录 anon 不需要登录 user记住密码或者登陆可以访问
+		filterChainDefinitionMap.put("/bootstrap-4.0.0-dist/**", "anon");
 		filterChainDefinitionMap.put("/jquery/**", "anon");
+		filterChainDefinitionMap.put("/css/**", "anon");
+		filterChainDefinitionMap.put("/js/**", "anon");
+		filterChainDefinitionMap.put("/images/**", "anon");
 		filterChainDefinitionMap.put("/doRegister", "anon");
 		filterChainDefinitionMap.put("/add", "roles[管理员]");
 		filterChainDefinitionMap.put("/edit", "roles[开发]");

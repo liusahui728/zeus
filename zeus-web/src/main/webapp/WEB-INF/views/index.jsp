@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<!DOCTYPE html>
-<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+	pageEncoding="utf-8"%>
+<!doctype html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>菜单</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Dashboard Template for Bootstrap</title>
+<%@ include file="menu.jsp" %>
+<!-- Custom styles for this template -->
+<link href="css/dashboard.css" rel="stylesheet">
 </head>
 <body>
-<p>session:<%=session.getId()%></p>
-菜单 ---->当前用户：${username}  <a href="logout">退出</a>
-<ul>
-	<li><a href="add">添加-->需要管理员角色</a></li>
-	<li><a href="edit">编辑-->需要开发角色</a></li>
-	<li><a href="query">查询</a></li>
-	<li><a href="delete">删除</a></li>
-	<li><a href="order">查看订单-->强制登陆</a></li>
-</ul>
+index
 </body>
 </html>

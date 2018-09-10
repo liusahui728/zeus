@@ -1,8 +1,12 @@
 package org.com.zeus.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -69,23 +73,36 @@ public class LoginController extends BaseController {
 	}
 
 	@GetMapping("/index")
-	public ModelAndView index() {
+	public ModelAndView index(HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index");
-		mav.addObject("username", SecurityUtils.getSubject().getPrincipal());
+		Cookie newCookie = new Cookie("userName", getCurrentUserName());
+		response.addCookie(newCookie);
+		mav.addObject("user", SecurityUtils.getSubject().getPrincipal());
 		return mav;
 
 	}
 
 	@GetMapping("/add")
 	public String add() {
-		return "operation/add";
+		return "user/add";
 
 	}
 
 	@GetMapping("/query")
 	public String query(Model model, HttpServletRequest request) {
-		return "operation/query";
+		return "user/query";
+
+	}
+	
+	@GetMapping("/getData")
+	@ResponseBody
+	public Map getData() {
+		List list=userService.list(null);
+		Map map=new HashMap<>();
+		map.put("total", 120);
+		map.put("rows", list);
+		return map;
 
 	}
 
@@ -93,19 +110,19 @@ public class LoginController extends BaseController {
 	public String edit() {
 
 		System.out.println(getCurrentUserName());
-		return "operation/edit";
+		return "user/edit";
 
 	}
 
 	@GetMapping("/delete")
 	public String delete() {
-		return "operation/delete";
+		return "user/delete";
 
 	}
 
 	@GetMapping("/order")
 	public String order() {
-		return "operation/order";
+		return "user/order";
 
 	}
 
