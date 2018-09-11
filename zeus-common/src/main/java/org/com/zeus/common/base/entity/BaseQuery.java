@@ -3,9 +3,8 @@ package org.com.zeus.common.base.entity;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 
-public abstract class BaseQuery<T extends BaseQuery> extends Model<T> implements Serializable {
+public class BaseQuery implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	// 每页数

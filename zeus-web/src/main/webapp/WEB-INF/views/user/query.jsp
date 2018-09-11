@@ -67,6 +67,12 @@
 		</div>
 	</div>
 </div>
+<div id="myAlert" class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert">
+        &times;
+    </a>
+    <strong>操作成功</strong>
+</div>
 </body>
 </html>
 <script>
@@ -149,13 +155,13 @@ $("#addBtn").click(function(data){
 		}),
 		dataType : "json",
 		contentType : "application/json",
-		success : function(data) {alert(data。msg)
+		success : function(data) {
 			if (data.isSuccess) {
-				alert("添加成功")
+				$("#myAlert").alert();
 				$("#myModal").modal('hide'); 
 				$('#table').bootstrapTable('refresh', '');
 			} else {
-				alert(data。msg)
+				alert(data.msg)
 			}
 		}
 	});
