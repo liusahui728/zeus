@@ -1,10 +1,11 @@
-package org.com.zeus.controller.user;
+package org.com.zeus.controller;
+
+import java.util.ArrayList;
 
 import org.com.zeus.common.base.entity.BasePagination;
 import org.com.zeus.common.base.entity.BaseQuery;
 import org.com.zeus.common.base.entity.BaseResullt;
 import org.com.zeus.common.model.User;
-import org.com.zeus.controller.BaseController;
 import org.com.zeus.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class UserController extends BaseController {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public BaseResullt add(@RequestBody User user) {
+	public BaseResullt add(User user) {
 		return userService.register(user);
 
 	}
@@ -40,6 +41,12 @@ public class UserController extends BaseController {
 	public BasePagination query(BaseQuery query) {
 		IPage<User> pageres=userService.page(new Page<User>(query.getPageNo(),query.getPageSize()), null);
 		return new BasePagination(pageres.getRecords(), pageres.getTotal());
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public BaseResullt delete(@RequestBody ArrayList<Long> ids) {
+		return BaseResullt.utils.setSuccessResult(userService.removeByIds(ids));
 	}
 
 }

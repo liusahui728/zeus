@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.8.0.min.js"></script>
 <html>
 <head>
 <meta charset="utf-8">
@@ -13,7 +13,7 @@
 	<h1>欢迎登录!</h1>
 	<form>
 		<p>session:<%=session.getId()%></p>
-		<p><input type="text" name="username" id="username"></p>
+		<p><input type="text" name="account" id="account"></p>
 		<p><input type="password" name="password" id="password"></p>
 		<input type="checkbox" name="rememberMe" id="rememberMe">记住密码
 		<p><input type="button" id="login" value="提交"><a href="doRegister"><input type="button" id="register" value="注册"></a></p>
@@ -26,7 +26,7 @@
 		$.ajax({
 			type : "POST",
 			url : "login",
-			data : JSON.stringify({"username":$("#username").val(),"password":$("#password").val(),"rememberMe":rememberMe}),
+			data : JSON.stringify({"account":$("#account").val(),"password":$("#password").val(),"rememberMe":rememberMe}),
 			dataType : "json",
 			contentType : "application/json",
 			success : function(data) {

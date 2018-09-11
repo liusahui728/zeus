@@ -4,8 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="copyright" content="All Rights Reserved, Copyright (C) 2013, Wuyeguo, Ltd." />
-<title>EasyUI Web Admin Power by Wuyeguo</title>
 <link rel="stylesheet" type="text/css" href="easyui/1.3.4/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="css/wu.css" />
 <link rel="stylesheet" type="text/css" href="css/icon.css" />
@@ -17,11 +15,11 @@
 	<!-- begin of header -->
 	<div class="wu-header" data-options="region:'north',border:false,split:true">
     	<div class="wu-header-left">
-        	<h1>EasyUI Web Admin</h1>
+        	<h1>ZEUS</h1>
         </div>
         <div class="wu-header-right">
-        	<p><strong class="easyui-tooltip" title="2条未读消息">admin</strong>，欢迎您！</p>
-            <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
+        	<p><strong class="easyui-tooltip" title="2条未读消息">${user.userName}</strong>，欢迎您！</p>
+            <p><!-- <a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>| --><a href="logout">安全退出</a></p>
         </div>
     </div>
     <!-- end of header -->
@@ -30,9 +28,9 @@
     	<div class="easyui-accordion" data-options="border:false,fit:true"> 
         	<div title="快捷菜单" data-options="iconCls:'icon-application-cascade'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
+    				<li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="user/list" iframe="0">用户管理</a></li>
+                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="role/list" iframe="0">角色管理</a></li>
                 	<li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="temp/layout-2.html" iframe="0">菜单导航</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="user/list" iframe="0">用户管理</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">角色管理</a></li>
                     <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">数据字典</a></li>
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">系统参数</a></li>
                     <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">操作日志</a></li>
@@ -104,12 +102,12 @@
     <!-- begin of main -->
     <div class="wu-main" data-options="region:'center'">
         <div id="wu-tabs" class="easyui-tabs" data-options="border:false,fit:true">  
-            <div title="首页" data-options="href:'temp/layout-1.html',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
+            <div title="首页" data-options="href:'hello',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
         </div>
     </div>
     <!-- end of main --> 
     <!-- begin of footer -->
-	<div class="wu-footer" data-options="region:'south',border:true,split:true">
+	<div class="wu-footer" data-options="region:'south',border:true">
     	&copy; 2013 Wu All Rights Reserved
     </div>
     <!-- end of footer -->  

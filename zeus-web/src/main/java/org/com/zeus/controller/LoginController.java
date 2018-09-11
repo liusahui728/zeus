@@ -133,6 +133,12 @@ public class LoginController extends BaseController {
 
 	}
 
+	// 被踢出后跳转的页面
+	@GetMapping(value = "/hello")
+	public String hello() {
+		return "hello";
+	}
+	
 
 	// 被踢出后跳转的页面
 	@GetMapping(value = "/logout")

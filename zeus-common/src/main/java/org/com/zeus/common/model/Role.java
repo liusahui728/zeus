@@ -5,11 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.com.zeus.common.constants.ColumnDefinition;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import lombok.Data;
@@ -20,7 +20,7 @@ public class Role extends Model<Role> {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
+	@TableId
 	@Column(name = "role_id")
 	private Long roleId;
 	@Column(name = "role_name")

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <div class="easyui-layout" data-options="fit:true">
+	<div data-options="region:'west',split:true" title="West" style="width:200px;"></div>
     <!-- Begin of toolbar -->
-    <div id="user-toolbar-2">
-        <div class="user-toolbar-search" style="margin:10px 0 10px 10px">
+    <div id="role-toolbar-2">
+        <div class="role-toolbar-search" style="margin:10px 0 10px 10px">
             <label>起始时间：</label><input class="easyui-datebox" style="width:100px">
             <label>结束时间：</label><input class="easyui-datebox" style="width:100px">
             <label>用户组：</label> 
@@ -13,34 +14,39 @@
                 <option value="2">红钻</option>
                 <option value="3">蓝钻</option>
             </select>
-            <label>关键词：</label><input class="user-text" style="width:100px">
+            <label>关键词：</label><input class="role-text" style="width:100px">
             <a href="#" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
         </div>
-        <div class="user-toolbar-button" style="border-top:1px solid #ccc">
+        <div class="role-toolbar-button" style="border-top:1px solid #ccc">
             <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a>|
             <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()" plain="true">修改</a>|
             <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="remove()" plain="true">删除</a>|
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="user-datagrid-2" class="easyui-datagrid" toolbar="#user-toolbar-2">
-    </table>
+    <div data-options="region:'center'" style="min-width:760px">
+	    <table id="role-datagrid-2" toolbar="#role-toolbar-2">
+	    </table>
+    </div>
+    
 </div>
 <!-- Begin of easyui-dialog -->
-<div id="user-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
-	<form id="user-form-2" method="post">
+<div id="role-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="role-form-2" method="post">
         <table>
             <tr>
-                <td width="60" align="right">用户名:</td>
-                <td><input type="text" name="account" class="user-text" /></td>
+                <td width="60" align="right">角色名:</td>
+                <td><input type="text" name="roleName" class="role-text" /></td>
             </tr>
+        </table>
+    </form>
+</div>
+<div id="role-dialog-3" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="role-form-2" method="post">
+        <table>
             <tr>
-                <td align="right">花名:</td>
-                <td><input type="text" name="userName" class="user-text" /></td>
-            </tr>
-            <tr>
-                <td align="right">密码:</td>
-                <td><input type="password" name="password" class="user-text" /></td>
+                <td width="60" align="right">用户:</td>
+                <td><input id="cc" name="dept" value="aa"></td>
             </tr>
         </table>
     </form>
@@ -51,15 +57,15 @@
 	* Name 添加记录
 	*/
 	function add(){
-		$('#user-form-2').form('submit', {
-			url:'user/add',
+		$('#role-form-2').form('submit', {
+			url:'role/add',
 			success:function(data){
 				data=JSON.parse(data);
 				console.log(data)
 				if(data.isSuccess){
 					$.messager.alert('信息提示','提交成功！','info');
 					reloads();
-					$('#user-dialog-2').dialog('close');
+					$('#role-dialog-2').dialog('close');
 					
 				}
 				else
@@ -74,13 +80,13 @@
 	* Name 修改记录
 	*/
 	function edit(){
-		$('#user-form-2').form('submit', {
+		$('#role-form-2').form('submit', {
 			url:'',
 			success:function(data){
 				if(data.isSuccess){
 					$.messager.alert('信息提示','提交成功！','info');
 					reloads();
-					$('#user-dialog-2').dialog('close');
+					$('#role-dialog-2').dialog('close');
 				}
 				else
 				{
@@ -96,7 +102,7 @@
 	function remove(){
 		$.messager.confirm('信息提示','确定要删除该记录？', function(result){
 			if(result){
-				var items = $('#user-datagrid-2').datagrid('getSelections');
+				var items = $('#role-datagrid-2').datagrid('getSelections');
 				var ids = [];
 				$(items).each(function(){
 					ids.push(this.userId);	
@@ -105,7 +111,7 @@
 				console.log(JSON.stringify(ids))
 				$.ajax({
 					type:"post",
-					url:'user/delete',
+					url:'role/delete',
 					contentType: "application/json",
 					dataType : 'json',
 					data:JSON.stringify(ids),
@@ -128,8 +134,8 @@
 	* Name 打开添加窗口
 	*/
 	function openAdd(){
-		$('#user-form-2').form('clear');
-		$('#user-dialog-2').dialog({
+		$('#role-form-2').form('clear');
+		$('#role-dialog-2').dialog({
 			closed: false,
 			modal:true,
             title: "添加信息",
@@ -141,7 +147,7 @@
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    $('#user-dialog-2').dialog('close');                    
+                    $('#role-dialog-2').dialog('close');                    
                 }
             }]
         });
@@ -151,10 +157,10 @@
 	* Name 打开修改窗口
 	*/
 	function openEdit(){
-		$('#user-form-2').form('clear');
-		var item = $('#user-datagrid-2').datagrid('getSelected');
-		$('#user-form-2').form('load', item)
-		$('#user-dialog-2').dialog({
+		$('#role-form-2').form('clear');
+		var item = $('#role-datagrid-2').datagrid('getSelected');
+		$('#role-form-2').form('load', item)
+		$('#role-dialog-2').dialog({
 			closed: false,
 			modal:true,
             title: "修改信息",
@@ -166,7 +172,7 @@
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    $('#user-dialog-2').dialog('close');                    
+                    $('#role-dialog-2').dialog('close');                    
                 }
             }]
         });
@@ -205,8 +211,8 @@
 	/**
 	* Name 载入数据
 	*/
-	$('#user-datagrid-2').datagrid({
-		url:'user/list',
+	$('#role-datagrid-2').datagrid({
+		url:'role/list',
 		loadFilter:pagerFilter,		
 		rownumbers:true,
 		singleSelect:false,
@@ -217,12 +223,20 @@
 		fit:true,
 		columns:[[
 			{ checkbox:true},
-			{ field:'userId',title:'用户编号',width:100,sortable:true},
-			{ field:'account',title:'账号',width:180,sortable:true},
-			{ field:'userName',title:'花名',width:100},
-		]]
+			{ field:'roleId',title:'角色编号',width:100,sortable:true},
+			{ field:'roleName',title:'角色名称',width:180,sortable:true},
+			{ field: '_operator', title: '操作', width: 100, align: "center", formatter: btnDetailed}
+		]],
+		onLoadSuccess:function(data){
+			$.parser.parse('td[field="_operator"]:gt(0)'); 
+		}
 	});
 	function reloads(){
-        $('#user-datagrid-2').datagrid('reload');//刷新
+        $('#role-datagrid-2').datagrid('reload');//刷新
     }
+	// 详细按扭
+	function btnDetailed(value, rowData, rowIndex) {
+		console.log(value)
+	    return '<a href="#" id="opera" class="easyui-linkbutton" iconCls="icon-add" onclick="remove()" plain="true"></a>';
+	}
 </script>
