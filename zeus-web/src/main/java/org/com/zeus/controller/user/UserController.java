@@ -1,22 +1,19 @@
 package org.com.zeus.controller.user;
 
-import java.util.Map;
-
 import org.com.zeus.common.base.entity.BasePagination;
 import org.com.zeus.common.base.entity.BaseQuery;
 import org.com.zeus.common.base.entity.BaseResullt;
 import org.com.zeus.common.model.User;
 import org.com.zeus.controller.BaseController;
 import org.com.zeus.service.IUserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -32,15 +29,16 @@ public class UserController extends BaseController {
 		return userService.register(user);
 
 	}
+	
+	@GetMapping("/list")
+	public String query() {
+		return "user/list";
+	}
 
-	@PostMapping("/query")
+	@PostMapping("/list")
 	@ResponseBody
-	public BasePagination query(@RequestBody Map map) {
-		User user=new User();
-		BaseQuery query=new BaseQuery();
-		BeanUtils.copyProperties(map, user);
-		BeanUtils.copyProperties(map, query);
-		IPage<User> pageres=userService.page(new Page<User>(query.getPageNo(),query.getPageSize()), new QueryWrapper<User>(user));
+	public BasePagination query(BaseQuery query) {
+		IPage<User> pageres=userService.page(new Page<User>(query.getPageNo(),query.getPageSize()), null);
 		return new BasePagination(pageres.getRecords(), pageres.getTotal());
 	}
 

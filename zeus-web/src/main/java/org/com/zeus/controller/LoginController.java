@@ -45,14 +45,14 @@ public class LoginController extends BaseController {
 	public BaseResullt login(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		// 添加用户认证信息
 		Subject subject = SecurityUtils.getSubject();
-		String userName = map.get("username").toString();
+		String account = map.get("account").toString();
 		String password = map.get("password").toString();
 		Boolean rememberme = (Boolean) map.get("rememberMe");
 		/*
 		 * String newPs = new SimpleHash("MD5", password,
 		 * ByteSource.Util.bytes(userName), 2).toHex();
 		 */
-		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, password);
+		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account, password);
 		usernamePasswordToken.setRememberMe(rememberme);
 		// 进行验证，这里可以捕获异常，然后返回对应信息
 		try {
