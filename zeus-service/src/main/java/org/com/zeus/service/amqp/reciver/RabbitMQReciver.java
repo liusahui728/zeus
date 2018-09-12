@@ -1,4 +1,4 @@
-package org.com.zeus.service.amqp;
+package org.com.zeus.service.amqp.reciver;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -21,14 +21,12 @@ public class Role extends Model<Role> {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@TableId
-	@Column(name = "role_id")
 	private Long roleId;
-	@Column(name = "role_name")
 	private String roleName;
 
-	@Column(name = "create_time", columnDefinition = ColumnDefinition.DATEDEFAULT)
+	@Column(columnDefinition = ColumnDefinition.DATEDEFAULT)
 	private Date createTime;
-	@Column(name = "modify_time", columnDefinition = ColumnDefinition.DATEDEFAULT)
+	@Column(columnDefinition = ColumnDefinition.DATEDEFAULT)
 	private Date modifyTime;
 	@Column(columnDefinition = ColumnDefinition.BYTEDEFAULT)
 	private Byte deleted;

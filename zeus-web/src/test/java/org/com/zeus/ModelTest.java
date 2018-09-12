@@ -1,15 +1,14 @@
 package org.com.zeus;
 
-import org.com.zeus.common.model.Person;
+import org.com.zeus.service.amqp.sender.RabbitMQSender;
 import org.junit.Test;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ModelTest extends AppTest {
+	@Autowired
+	RabbitMQSender rabbitMQSender;
 	@Test
 	public void test() {
-		Person person=new Person();
-		person.selectPage(new Page<>(0,10), new QueryWrapper<>());
+		rabbitMQSender.send("000607b2-b1bc-11e8-9637-0242ac110006");
 	}
 }

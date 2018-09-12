@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <div class="easyui-layout" data-options="fit:true">
-	<div data-options="region:'west',split:true" title="West" style="width:200px;"></div>
+	<div data-options="region:'west',split:true" title="角色用户列表" style="width:200px;">
+		<ul id="roleUserTree"></ul>
+	</div>
     <!-- Begin of toolbar -->
     <div id="role-toolbar-2">
         <div class="role-toolbar-search" style="margin:10px 0 10px 10px">
@@ -42,17 +44,28 @@
     </form>
 </div>
 <div id="role-dialog-3" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
-	<form id="role-form-2" method="post">
+	<form id="role-form-3" method="post">
+		<input id="roleId" type="hidden" name="roleId" >
         <table>
             <tr>
                 <td width="60" align="right">用户:</td>
-                <td><input id="cc" name="dept" value="aa"></td>
+                <td><input id="userId" class="easyui-combobox" name="userId" ></td>
             </tr>
         </table>
     </form>
 </div>
-<!-- End of easyui-dialog -->
 <script type="text/javascript">
+	$('#roleUserTree').tree({
+	    url: "role/getRoleUserTree",
+	    loadFilter: function(result){
+	    	console.log(result);
+	        if (result.isSuccess){
+	            return result.data;
+	        } else {
+	        	$.messager.alert('信息提示',result.msg,'info');
+	        }
+	    }
+	});
 	/**
 	* Name 添加记录
 	*/
@@ -66,6 +79,28 @@
 					$.messager.alert('信息提示','提交成功！','info');
 					reloads();
 					$('#role-dialog-2').dialog('close');
+					
+				}
+				else
+				{
+					$.messager.alert('信息提示',data.msg,'info');
+				}
+			}
+		});
+	}
+	
+	/**
+	* Name 添加记录
+	*/
+	function addUser(){
+		$('#role-form-3').form('submit', {
+			url:'role/addUser',
+			success:function(data){
+				data=JSON.parse(data);
+				if(data.isSuccess){
+					$.messager.alert('信息提示','提交成功！','info');
+					reloads();
+					$('#role-dialog-3').dialog('close');
 					
 				}
 				else
@@ -102,10 +137,10 @@
 	function remove(){
 		$.messager.confirm('信息提示','确定要删除该记录？', function(result){
 			if(result){
-				var items = $('#role-datagrid-2').datagrid('getSelections');
+				var items = $('#role-datagrid-2').datagrid('getSelected');
 				var ids = [];
 				$(items).each(function(){
-					ids.push(this.userId);	
+					ids.push(this.roleId);	
 				});
 				console.log(ids)
 				console.log(JSON.stringify(ids))
@@ -148,6 +183,37 @@
                 iconCls: 'icon-cancel',
                 handler: function () {
                     $('#role-dialog-2').dialog('close');                    
+                }
+            }]
+        });
+	}
+	
+	/**
+	* Name 打开添加窗口
+	*/
+	function openAddUser(roleId){
+		$('#userId').combobox({
+		    url:'role/getUserCombbo',
+		    valueField:'id',
+		    textField:'text',
+		    onBeforeLoad: function(param){
+		    	param.roleId = roleId;
+			}
+		});
+		$("#roleId").val(roleId);
+		$('#role-dialog-3').dialog({
+			closed: false,
+			modal:true,
+            title: "添加信息",
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                handler: addUser
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $('#role-dialog-3').dialog('close');                    
                 }
             }]
         });
@@ -237,6 +303,10 @@
 	// 详细按扭
 	function btnDetailed(value, rowData, rowIndex) {
 		console.log(value)
-	    return '<a href="#" id="opera" class="easyui-linkbutton" iconCls="icon-add" onclick="remove()" plain="true"></a>';
+	    return '<a href="#" id="opera" class="easyui-linkbutton" iconCls="icon-add" onclick="openAddUser(\''+rowData.roleId+'\')" plain="true"></a>';
 	}
+	function reloads(){
+        $('#role-datagrid-2').datagrid('reload');//刷新
+        $('#roleUserTree').tree('reload');//刷新
+    }
 </script>

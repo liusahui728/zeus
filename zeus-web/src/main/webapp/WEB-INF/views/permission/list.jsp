@@ -2,8 +2,8 @@
     pageEncoding="utf-8"%>
 <div class="easyui-layout" data-options="fit:true">
     <!-- Begin of toolbar -->
-    <div id="user-toolbar-2">
-        <div class="user-toolbar-search" style="margin:10px 0 10px 10px">
+    <div id="permission-toolbar-2">
+        <div class="permission-toolbar-search" style="margin:10px 0 10px 10px">
             <label>起始时间：</label><input class="easyui-datebox" style="width:100px">
             <label>结束时间：</label><input class="easyui-datebox" style="width:100px">
             <label>用户组：</label> 
@@ -13,34 +13,43 @@
                 <option value="2">红钻</option>
                 <option value="3">蓝钻</option>
             </select>
-            <label>关键词：</label><input class="user-text" style="width:100px">
+            <label>关键词：</label><input class="permission-text" style="width:100px">
             <a href="#" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
         </div>
-        <div class="user-toolbar-button" style="border-top:1px solid #ccc">
+        <div class="permission-toolbar-button" style="border-top:1px solid #ccc">
             <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAdd()" plain="true">添加</a>|
             <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEdit()" plain="true">修改</a>|
             <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="remove()" plain="true">删除</a>|
         </div>
     </div>
-    <!-- End of toolbar -->
-    <table id="user-datagrid-2" class="easyui-datagrid" toolbar="#user-toolbar-2">
-    </table>
+    <div data-options="region:'center'" style="min-width:760px">
+	    <table id="permission-treegrid-2" toolbar="#permission-toolbar-2">
+	    </table>
+    </div>
 </div>
 <!-- Begin of easyui-dialog -->
-<div id="user-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
-	<form id="user-form-2" method="post">
+<div id="permission-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="permission-form-2" method="post">
         <table>
             <tr>
-                <td width="60" align="right">用户名:</td>
-                <td><input type="text" name="account"/></td>
+                <td width="60" align="right">权限Key:</td>
+                <td><input type="text" name="permissionKey" class="permission-text" /></td>
             </tr>
             <tr>
-                <td align="right">花名:</td>
-                <td><input type="text" name="userName"/></td>
+                <td align="right">权限名:</td>
+                <td><input type="text" name="permissionName" class="permission-text" /></td>
             </tr>
             <tr>
-                <td align="right">密码:</td>
-                <td><input type="password" name="password"/></td>
+                <td align="right">资源url:</td>
+                <td><input type="text" name="permissionUrl" class="permission-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">排序:</td>
+                <td><input type="text" name="orderNum" class="permission-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">父节点:</td>
+                <td><input id="parentId" name="parentId" class="permission-text" /></td>
             </tr>
         </table>
     </form>
@@ -51,19 +60,16 @@
 	* Name 添加记录
 	*/
 	function add(){
-		$('#user-form-2').form('submit', {
-			url:'user/add',
+		$('#permission-form-2').form('submit', {
+			url:'permission/add',
 			success:function(data){
 				data=JSON.parse(data);
 				console.log(data)
 				if(data.isSuccess){
 					$.messager.alert('信息提示','提交成功！','info');
 					reloads();
-					$('#user-dialog-2').dialog('close');
-					
-				}
-				else
-				{
+					$('#permission-dialog-2').dialog('close');
+				}else{
 					$.messager.alert('信息提示',data.msg,'info');
 				}
 			}
@@ -74,13 +80,13 @@
 	* Name 修改记录
 	*/
 	function edit(){
-		$('#user-form-2').form('submit', {
+		$('#permission-form-2').form('submit', {
 			url:'',
 			success:function(data){
 				if(data.isSuccess){
 					$.messager.alert('信息提示','提交成功！','info');
 					reloads();
-					$('#user-dialog-2').dialog('close');
+					$('#permission-dialog-2').dialog('close');
 				}
 				else
 				{
@@ -96,16 +102,16 @@
 	function remove(){
 		$.messager.confirm('信息提示','确定要删除该记录？', function(result){
 			if(result){
-				var items = $('#user-datagrid-2').datagrid('getSelections');
+				var items = $('#permission-datagrid-2').datagrid('getSelections');
 				var ids = [];
 				$(items).each(function(){
-					ids.push(this.userId);	
+					ids.push(this.permissionId);	
 				});
 				console.log(ids)
 				console.log(JSON.stringify(ids))
 				$.ajax({
 					type:"post",
-					url:'user/delete',
+					url:'permission/delete',
 					contentType: "application/json",
 					dataType : 'json',
 					data:JSON.stringify(ids),
@@ -128,8 +134,19 @@
 	* Name 打开添加窗口
 	*/
 	function openAdd(){
-		$('#user-form-2').form('clear');
-		$('#user-dialog-2').dialog({
+		$('#permission-form-2').form('clear');
+		$('#parentId').combotree({
+		    url: 'permission/getPremissionTree',
+		    loadFilter: function(result){
+		    	console.log(result);
+		        if (result.isSuccess){
+		            return result.data;
+		        } else {
+		        	$.messager.alert('信息提示',result.msg,'info');
+		        }
+		    }
+		});
+		$('#permission-dialog-2').dialog({
 			closed: false,
 			modal:true,
             title: "添加信息",
@@ -141,7 +158,7 @@
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    $('#user-dialog-2').dialog('close');                    
+                    $('#permission-dialog-2').dialog('close');                    
                 }
             }]
         });
@@ -151,10 +168,10 @@
 	* Name 打开修改窗口
 	*/
 	function openEdit(){
-		$('#user-form-2').form('clear');
-		var item = $('#user-datagrid-2').datagrid('getSelected');
-		$('#user-form-2').form('load', item)
-		$('#user-dialog-2').dialog({
+		$('#permission-form-2').form('clear');
+		var item = $('#permission-datagrid-2').datagrid('getSelected');
+		$('#permission-form-2').form('load', item)
+		$('#permission-dialog-2').dialog({
 			closed: false,
 			modal:true,
             title: "修改信息",
@@ -166,48 +183,16 @@
                 text: '取消',
                 iconCls: 'icon-cancel',
                 handler: function () {
-                    $('#user-dialog-2').dialog('close');                    
+                    $('#permission-dialog-2').dialog('close');                    
                 }
             }]
         });
 	}	
 	
-	/**
-	* Name 分页过滤器
-	*/
-	function pagerFilter(data){            
-		if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array                
-			data = {                   
-				total: data.length,                   
-				rows: data               
-			}            
-		}        
-		var dg = $(this);         
-		var opts = dg.datagrid('options');          
-		var pager = dg.datagrid('getPager');          
-		pager.pagination({                
-			onSelectPage:function(pageNum, pageSize){                 
-				opts.pageNumber = pageNum;                   
-				opts.pageSize = pageSize;                
-				pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});                  
-				dg.datagrid('loadData',data);                
-			}          
-		});           
-		if (!data.originalRows){               
-			data.originalRows = (data.rows);       
-		}         
-		var start = (opts.pageNumber-1)*parseInt(opts.pageSize);          
-		var end = start + parseInt(opts.pageSize);        
-		data.rows = (data.originalRows.slice(start, end));         
-		return data;       
-	}
-	
-	/**
-	* Name 载入数据
-	*/
-	$('#user-datagrid-2').datagrid({
-		url:'user/list',
-		loadFilter:pagerFilter,		
+	$('#permission-treegrid-2').treegrid({
+        url: 'permission/getPremissionTreeGrid',
+        idField: 'permissionId',            //定义关键字段来标识树节点。也就是数据的id
+        treeField: 'permissionName',        //定义树形显示字段
 		rownumbers:true,
 		singleSelect:false,
 		pageSize:20,           
@@ -215,14 +200,35 @@
 		multiSort:true,
 		fitColumns:true,
 		fit:true,
-		columns:[[
-			{ checkbox:true},
-			{ field:'userId',title:'用户编号',width:100,sortable:true},
-			{ field:'account',title:'账号',width:180,sortable:true},
-			{ field:'userName',title:'花名',width:100},
-		]]
-	});
+        columns: [[                //定义表格头名称
+            {
+                title: '权限名称',
+                field: 'permissionName',
+                width:1
+            },
+            {
+                title: '权限Key',
+                field: 'permissionUrl'
+            },
+            {
+                title: '资源路径',
+                field: 'permissionUrl'
+            },
+            {
+                title: '排序',
+                field: 'orderNum'
+            },
+        ]],
+        loadFilter: function(result){
+	    	console.log(result);
+	        if (result.isSuccess){
+	            return result.data;
+	        } else {
+	        	$.messager.alert('信息提示',result.msg,'info');
+	        }
+	    } 
+    });
 	function reloads(){
-        $('#user-datagrid-2').datagrid('reload');//刷新
+        $('#permission-datagrid-2').treegrid('reload');//刷新
     }
 </script>
