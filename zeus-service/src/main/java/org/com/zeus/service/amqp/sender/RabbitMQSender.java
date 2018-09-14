@@ -10,7 +10,8 @@ public class RabbitMQSender {
 	@Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public void send(String msgString) {
-        this.rabbitTemplate.convertAndSend("clientToCustomerQueue", msgString);
+    public void send(String str) {
+    	
+        this.rabbitTemplate.convertAndSend("clientToCustomerQueue", str);
     }
 }

@@ -27,6 +27,18 @@ spring:
     addresses: 192.168.0.47:5672,192.168.0.47:5673,192.168.0.47:5674
     username: root
     password: root
+#  redis:
+ #   cluster:
+ #     nodes:
+  #    - 192.168.0.44:7001
+  #    - 192.168.0.44:7002
+  #    - 192.168.0.44:7003
+   #   - 192.168.0.44:7004
+  #    - 192.168.0.44:7005
+  #    - 192.168.0.44:7006
+#  redis:
+ #   host: 192.168.0.44
+  #  port: 7000
 mybatis-plus:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml

@@ -23,7 +23,6 @@ import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
-import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -151,15 +150,8 @@ public class ShiroConfiguration {
 	 */
 
 	@Bean
-	public RedisSessionDAO redisSessionDAO() {
-		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-		/*
-		 * User user=new User();
-		 * BeanUtils.copyProperties(SecurityUtils.getSubject().getPrincipal(), user);
-		 * 
-		 */
-		redisSessionDAO.setKeyPrefix("zeus_session:");
-		redisSessionDAO.setRedisManager(redisManager());
+	public ShiroSessionDAO redisSessionDAO() {
+		ShiroSessionDAO redisSessionDAO = new ShiroSessionDAO();
 		return redisSessionDAO;
 	}
 

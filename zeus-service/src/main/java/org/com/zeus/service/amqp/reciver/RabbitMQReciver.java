@@ -1,4 +1,4 @@
-package org.com.zeus.service.amqp.reciver;
+/*package org.com.zeus.service.amqp.reciver;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,3 +13,4 @@ public class RabbitMQReciver {
 	        System.out.println("Receiver1  : " + hello);
 	    }
 }
+*/

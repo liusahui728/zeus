@@ -201,23 +201,10 @@
 		fitColumns:true,
 		fit:true,
         columns: [[                //定义表格头名称
-            {
-                title: '权限名称',
-                field: 'permissionName',
-                width:1
-            },
-            {
-                title: '权限Key',
-                field: 'permissionUrl'
-            },
-            {
-                title: '资源路径',
-                field: 'permissionUrl'
-            },
-            {
-                title: '排序',
-                field: 'orderNum'
-            },
+        	{field: 'permissionName',title: '权限名称',width:100},
+        	{title: '权限Key',field: 'permissionUrl',width:100},
+        	{title: '资源路径',field: 'permissionUrl'},
+        	{title: '排序',field: 'orderNum'},
         ]],
         loadFilter: function(result){
 	    	console.log(result);
