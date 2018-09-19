@@ -1,4 +1,4 @@
-package org.com.zeus.config;
+package org.com.zeus.config.converter;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ spring:
       charset: utf-8
       enabled: true
   datasource:
-    url: jdbc:mysql://192.168.85.128:3306/zeus?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.85.131:3306/zeus?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
     druid:

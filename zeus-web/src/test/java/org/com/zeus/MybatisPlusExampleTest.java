@@ -11,6 +11,7 @@ import org.com.zeus.mapper.ExampleMapper;
 import org.com.zeus.service.IExampleService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,6 +38,7 @@ public class MybatisPlusExampleTest extends AppTest {
 		example.selectById(1L);
 		example.selectCount(null);
 		example.selectOne(new QueryWrapper<Example>().lambda().eq(Example::getId, 1L));
+		List<Example> listt1=example.selectList(new QueryWrapper<Example>().lambda().like(StringUtils.isEmpty(example), Example::getExComment, example.getExComment()));
 		example.selectPage(new Page<Example>(1, 10), new QueryWrapper<Example>().lambda().orderByAsc(Example::getExid));
 		example.updateById();
 		//example.update(new QueryWrapper<Example>().lambda().eq(Example::getExid, example.getExid()));

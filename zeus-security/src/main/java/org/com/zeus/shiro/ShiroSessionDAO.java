@@ -76,6 +76,7 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 				Set<String> sets = connection.keys(pattern);
 				if (sets != null && sets.size() > 0) {
 					for (String key : sets) {
+						System.out.println("key:"+key);
 						Session s = (Session) SerializeUtils.deserialize(jedisCluster.get(key.getBytes()));
 						sessions.add(s);
 					}
