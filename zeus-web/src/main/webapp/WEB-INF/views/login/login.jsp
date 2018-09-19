@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-<script type="text/javascript" src="jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 <html>
 <head>
 <meta charset="utf-8">

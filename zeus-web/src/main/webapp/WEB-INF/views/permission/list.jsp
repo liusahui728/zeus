@@ -102,7 +102,7 @@
 	function remove(){
 		$.messager.confirm('信息提示','确定要删除该记录？', function(result){
 			if(result){
-				var items = $('#permission-datagrid-2').datagrid('getSelections');
+				var items = $('#permission-treegrid-2').datagrid('getSelections');
 				var ids = [];
 				$(items).each(function(){
 					ids.push(this.permissionId);	
@@ -169,7 +169,7 @@
 	*/
 	function openEdit(){
 		$('#permission-form-2').form('clear');
-		var item = $('#permission-datagrid-2').datagrid('getSelected');
+		var item = $('#permission-treegrid-2').datagrid('getSelected');
 		$('#permission-form-2').form('load', item)
 		$('#permission-dialog-2').dialog({
 			closed: false,
@@ -201,8 +201,8 @@
 		fitColumns:true,
 		fit:true,
         columns: [[                //定义表格头名称
-        	{field: 'permissionName',title: '权限名称',width:100},
-        	{title: '权限Key',field: 'permissionUrl',width:100},
+        	{title: '权限名称',field: 'permissionName'},
+        	{title: '权限Key',field: 'permissionKey'},
         	{title: '资源路径',field: 'permissionUrl'},
         	{title: '排序',field: 'orderNum'},
         ]],
@@ -216,6 +216,6 @@
 	    } 
     });
 	function reloads(){
-        $('#permission-datagrid-2').treegrid('reload');//刷新
+        $('#permission-treegrid-2').treegrid('reload');//刷新
     }
 </script>
