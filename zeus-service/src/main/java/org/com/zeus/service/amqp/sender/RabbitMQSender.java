@@ -10,8 +10,21 @@ public class RabbitMQSender {
 	@Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public void send(String str) {
-    	
-        this.rabbitTemplate.convertAndSend("clientToCustomerQueue", str);
+	
+    public void send(String bs) {
+        this.rabbitTemplate.convertAndSend("myQueue", bs);
     }
+    
+    public void send() {
+        String msgString="fanoutSender :hello i am hzb";
+        System.out.println(msgString);
+        this.rabbitTemplate.convertAndSend("fanoutExchange","", msgString);
+    }
+    
+    public void send1() {
+        String msgString="fanoutSender :hello i am hzb";
+        System.out.println(msgString);
+        this.rabbitTemplate.convertAndSend("zeusExchange","", msgString);
+    }
+
 }

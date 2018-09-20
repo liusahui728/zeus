@@ -25,7 +25,7 @@ public class ModelTest extends AppTest {
 	public void test2() {
 		Map map = new HashMap<>();
 		for(int i=0;i<1;i++) {
-			map.put("clientId", "7a41ec0baab411e8a4ad0242ac11000f");
+			map.put("clientId", "0054ba5ebbd111e8928a0242ac110001");
 			//map.put("empId", "0439f4db6d704bb7824f8f4f4218bfb7");
 			rabbitMQSender.send(JSON.toJSONString(map));
 			
@@ -33,12 +33,12 @@ public class ModelTest extends AppTest {
 		
 	}
 
-	@Test
+/*	@Test
 	public void test() {
 		jedisCluster.set("testkey", "test");
 		System.out.println(jedisCluster.get("testkey"));
 
-	}
+	}*/
 
 	@Test
 	public void test1() {
@@ -51,4 +51,9 @@ public class ModelTest extends AppTest {
 		 */
 		// System.out.println(jedisCluster.get("username"));
 	}
+	
+/*	@Test
+	public void testExchange() {
+		rabbitMQSender.send1();
+	}*/
 }
