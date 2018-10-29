@@ -1,4 +1,4 @@
-package org.com.zeus.shiro;
+/*package org.com.zeus.shiro;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,9 +25,9 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(RedisSessionDAO.class);
 
-	/**
+	*//**
 	 * The Redis key prefix for the sessions
-	 */
+	 *//*
 	private String keyPrefix = "shiro_redis_session:";
 
 	@Override
@@ -35,12 +35,12 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 		this.saveSession(session);
 	}
 
-	/**
+	*//**
 	 * save session
 	 * 
 	 * @param session
 	 * @throws UnknownSessionException
-	 */
+	 *//*
 	private void saveSession(Session session) throws UnknownSessionException {
 		if (session == null || session.getId() == null) {
 			logger.error("session or session id is null");
@@ -107,34 +107,35 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 		return s;
 	}
 
-	/**
+	*//**
 	 * 鑾峰緱byte[]鍨嬬殑key
 	 * 
 	 * @param key
 	 * @return
-	 */
+	 *//*
 	private byte[] getByteKey(Serializable sessionId) {
 		String preKey = this.keyPrefix + sessionId;
 		return preKey.getBytes();
 	}
 
-	/**
+	*//**
 	 * Returns the Redis session keys prefix.
 	 * 
 	 * @return The prefix
-	 */
+	 *//*
 	public String getKeyPrefix() {
 		return keyPrefix;
 	}
 
-	/**
+	*//**
 	 * Sets the Redis sessions key prefix.
 	 * 
 	 * @param keyPrefix The prefix
-	 */
+	 *//*
 	public void setKeyPrefix(String keyPrefix) {
 		this.keyPrefix = keyPrefix;
 	}
 
 	
 }
+*/

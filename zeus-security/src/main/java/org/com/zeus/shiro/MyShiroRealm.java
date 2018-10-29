@@ -18,6 +18,7 @@ import org.apache.shiro.util.ByteSource;
 import org.com.zeus.common.model.User;
 import org.com.zeus.mapper.UserMapper;
 import org.com.zeus.service.IUserService;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,7 +36,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 	private IUserService userService;
 	
 	@Autowired
-	ShiroSessionDAO shiroSessionDAO;
+	RedisSessionDAO shiroSessionDAO;
 	// 角色权限和对应权限添加
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {

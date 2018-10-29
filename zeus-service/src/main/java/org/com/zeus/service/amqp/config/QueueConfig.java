@@ -1,4 +1,4 @@
-package org.com.zeus.service.amqp.config;
+/*package org.com.zeus.service.amqp.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -73,3 +73,4 @@ public class QueueConfig {
     }
    
 }
+*/

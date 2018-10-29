@@ -1,4 +1,4 @@
-package org.com.zeus;
+/*package org.com.zeus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +12,9 @@ import com.alibaba.fastjson.JSON;
 import redis.clients.jedis.JedisCluster;
 
 public class ModelTest extends AppTest {
-	/*
+	
 	 * @Autowired RedisTemplate<String, String> redisTemplate;
-	 */
+	 
 	@Autowired
 	JedisCluster jedisCluster;
 
@@ -33,27 +33,28 @@ public class ModelTest extends AppTest {
 		
 	}
 
-/*	@Test
+	@Test
 	public void test() {
 		jedisCluster.set("testkey", "test");
 		System.out.println(jedisCluster.get("testkey"));
 
-	}*/
+	}
 
 	@Test
 	public void test1() {
-		/*
+		
 		 * String key = "redisTestKey"; String value = "I am test value";
 		 * 
 		 * ValueOperations<String, String> opsForValue = redisTemplate.opsForValue(); //
 		 * 数据插入测试： opsForValue.set(key, value); String valueFromRedis =
 		 * opsForValue.get(key); System.out.println(valueFromRedis);
-		 */
+		 
 		// System.out.println(jedisCluster.get("username"));
 	}
 	
-/*	@Test
+	@Test
 	public void testExchange() {
 		rabbitMQSender.send1();
-	}*/
+	}
 }
+*/

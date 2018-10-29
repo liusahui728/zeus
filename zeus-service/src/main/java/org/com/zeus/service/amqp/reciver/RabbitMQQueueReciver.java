@@ -1,4 +1,4 @@
-package org.com.zeus.service.amqp.reciver;
+/*package org.com.zeus.service.amqp.reciver;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,4 +17,4 @@ public class RabbitMQQueueReciver {
 	    	JSONObject jSONObject=JSON.parseObject(str);
 	        System.out.println("myQueue  : " + jSONObject.toJSONString());
 	    }
-}
+}*/

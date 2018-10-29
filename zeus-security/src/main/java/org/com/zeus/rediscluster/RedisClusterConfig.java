@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 
-@Configuration
+/*@Configuration
 public class RedisClusterConfig {
 	@Bean
 	public JedisCluster jedisCluster() {
@@ -23,4 +23,4 @@ public class RedisClusterConfig {
         //过期时间等自己配置
         return new JedisCluster(nodes);
 	}
-}
+}*/

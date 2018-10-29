@@ -1,4 +1,4 @@
-package org.com.zeus.service.amqp.sender;
+/*package org.com.zeus.service.amqp.sender;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,3 +28,4 @@ public class RabbitMQSender {
     }
 
 }
+*/

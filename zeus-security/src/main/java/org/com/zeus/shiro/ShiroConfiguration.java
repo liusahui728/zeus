@@ -23,6 +23,7 @@ import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -51,6 +52,7 @@ public class ShiroConfiguration {
 		// authc 需要登录 anon 不需要登录 user记住密码或者登陆可以访问
 		filterChainDefinitionMap.put("/easyui/**", "anon");
 		filterChainDefinitionMap.put("/jquery/**", "anon");
+		filterChainDefinitionMap.put("/test/**", "anon");
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/js/**", "anon");
 		filterChainDefinitionMap.put("/images/**", "anon");
@@ -150,8 +152,9 @@ public class ShiroConfiguration {
 	 */
 
 	@Bean
-	public ShiroSessionDAO redisSessionDAO() {
-		ShiroSessionDAO redisSessionDAO = new ShiroSessionDAO();
+	public RedisSessionDAO redisSessionDAO() {
+		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+		redisSessionDAO.setRedisManager(redisManager());
 		return redisSessionDAO;
 	}
 
